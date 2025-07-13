@@ -34,6 +34,6 @@ end)
 
 button.MouseButton1Click:Connect(function()
     running = not running
-    button.Text = running and "อยุดเว้ย" or "เริ่มหมอลำ"
+    button.Text = running and "Stop" or "Start"
     button.BackgroundColor3 = running and Color3.fromRGB(200, 50, 50) or Color3.fromRGB(50, 200, 50)
 end)
