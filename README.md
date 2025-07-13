@@ -1,7 +1,11 @@
-local player = game.Players.LocalPlayer
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+
+repeat wait() until player:FindFirstChild("PlayerGui")
 
 local gui = Instance.new("ScreenGui")
 gui.Name = "AutoKeyGUI"
+gui.ResetOnSpawn = false
 gui.Parent = player:WaitForChild("PlayerGui")
 
 local button = Instance.new("TextButton")
@@ -18,22 +22,22 @@ local running = false
 local keys = {"Z", "X", "C"}
 
 local function useSkill(key)
-    print("ใช้สกิล: " .. key)
+	print("ใช้สกิล: " .. key)
 end
 
 task.spawn(function()
-    while true do
-        task.wait(0.3)
-        if running then
-            for _, key in ipairs(keys) do
-                useSkill(key)
-            end
-        end
-    end
+	while true do
+		task.wait(0.3)
+		if running then
+			for _, key in ipairs(keys) do
+				useSkill(key)
+			end
+		end
+	end
 end)
 
 button.MouseButton1Click:Connect(function()
-    running = not running
-    button.Text = running and "Stopv1.1" or "Startv1.1"
-    button.BackgroundColor3 = running and Color3.fromRGB(200, 50, 50) or Color3.fromRGB(50, 200, 50)
+	running = not running
+	button.Text = running and "Stopv1.2" or "Startv1.2"
+	button.BackgroundColor3 = running and Color3.fromRGB(200, 50, 50) or Color3.fromRGB(50, 200, 50)
 end)
