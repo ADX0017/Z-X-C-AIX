@@ -1,43 +1,44 @@
 local Players = game:GetService("Players")
+local UserInputService = game:GetService("UserInputService")
+local VirtualInputManager = game:GetService("VirtualInputManager")
 local player = Players.LocalPlayer
 
-repeat wait() until player:FindFirstChild("PlayerGui")
+local screenGui = Instance.new("ScreenGui", player:WaitForChild("PlayerGui"))
+screenGui.Name = "AutoKeyGUI"
 
-local gui = Instance.new("ScreenGui")
-gui.Name = "AutoKeyGUI"
-gui.ResetOnSpawn = false
-gui.Parent = player:WaitForChild("PlayerGui")
+local toggleButton = Instance.new("TextButton", screenGui)
+toggleButton.Size = UDim2.new(0, 150, 0, 50)
+toggleButton.Position = UDim2.new(1, -160, 0.4, 0)
+toggleButton.AnchorPoint = Vector2.new(0, 0)
+toggleButton.Text = "เริ่มกด ZXC"
+toggleButton.BackgroundColor3 = Color3.fromRGB(60, 180, 255)
+toggleButton.TextColor3 = Color3.new(1,1,1)
+toggleButton.Font = Enum.Font.GothamBold
+toggleButton.TextSize = 18
+toggleButton.BorderSizePixel = 0
+toggleButton.AutoButtonColor = true
 
-local button = Instance.new("TextButton")
-button.Size = UDim2.new(0, 100, 0, 50)
-button.Position = UDim2.new(1, -110, 0.5, -25)
-button.Text = "Start"
-button.BackgroundColor3 = Color3.fromRGB(50, 200, 50)
-button.TextColor3 = Color3.new(1, 1, 1)
-button.Font = Enum.Font.SourceSansBold
-button.TextSize = 20
-button.Parent = gui
+local isRunning = false
 
-local running = false
-local keys = {"Z", "X", "C"}
-
-local function useSkill(key)
-	print("ใช้สกิล: " .. key)
+local function pressKey(key)
+    VirtualInputManager:SendKeyEvent(true, key, false, game)
+    wait(0.05)
+    VirtualInputManager:SendKeyEvent(false, key, false, game)
 end
 
 task.spawn(function()
-	while true do
-		task.wait(0.3)
-		if running then
-			for _, key in ipairs(keys) do
-				useSkill(key)
-			end
-		end
-	end
+    while true do
+        if isRunning then
+            pressKey(Enum.KeyCode.Z)
+            pressKey(Enum.KeyCode.X)
+            pressKey(Enum.KeyCode.C)
+        end
+        wait(0.2)
+    end
 end)
 
-button.MouseButton1Click:Connect(function()
-	running = not running
-	button.Text = running and "Stopv1.2" or "Startv1.2"
-	button.BackgroundColor3 = running and Color3.fromRGB(200, 50, 50) or Color3.fromRGB(50, 200, 50)
+toggleButton.MouseButton1Click:Connect(function()
+    isRunning = not isRunning
+    toggleButton.Text = isRunning and "หยุดกด ZXC" or "เริ่มกด ZXC"
+    toggleButton.BackgroundColor3 = isRunning and Color3.fromRGB(255, 80, 80) or Color3.fromRGB(60, 180, 255)
 end)
