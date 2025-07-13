@@ -1,39 +1,39 @@
-local ScreenGui = Instance.new("ScreenGui")
-ScreenGui.Name = "AutoKeyGui"
-ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+local player = game.Players.LocalPlayer
+
+local gui = Instance.new("ScreenGui")
+gui.Name = "AutoKeyGUI"
+gui.Parent = player:WaitForChild("PlayerGui")
 
 local button = Instance.new("TextButton")
 button.Size = UDim2.new(0, 100, 0, 50)
 button.Position = UDim2.new(1, -110, 0.5, -25)
 button.Text = "Start"
-button.Parent = ScreenGui
 button.BackgroundColor3 = Color3.fromRGB(50, 200, 50)
 button.TextColor3 = Color3.new(1, 1, 1)
 button.Font = Enum.Font.SourceSansBold
 button.TextSize = 20
+button.Parent = gui
 
 local running = false
+local keys = {"Z", "X", "C"}
 
-local UserInputService = game:GetService("UserInputService")
-
-local function pressKey(key)
-    UserInputService.InputBegan:Fire({KeyCode = Enum.KeyCode[key], UserInputType = Enum.UserInputType.Keyboard})
-    UserInputService.InputEnded:Fire({KeyCode = Enum.KeyCode[key], UserInputType = Enum.UserInputType.Keyboard})
+local function useSkill(key)
+    print("ใช้สกิล: " .. key)
 end
 
 task.spawn(function()
     while true do
-        wait(0.3)
+        task.wait(0.3)
         if running then
-            pressKey("Z")
-            pressKey("X")
-            pressKey("C")
+            for _, key in ipairs(keys) do
+                useSkill(key)
+            end
         end
     end
 end)
 
 button.MouseButton1Click:Connect(function()
     running = not running
-    button.Text = running and "Stop" or "Start"
+    button.Text = running and "Stopv1.1" or "Startv1.1"
     button.BackgroundColor3 = running and Color3.fromRGB(200, 50, 50) or Color3.fromRGB(50, 200, 50)
 end)
