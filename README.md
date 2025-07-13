@@ -22,7 +22,7 @@ local isRunning = false
 
 local function pressKey(key)
     VirtualInputManager:SendKeyEvent(true, key, false, game)
-    wait(0.05)
+    wait(0)
     VirtualInputManager:SendKeyEvent(false, key, false, game)
 end
 
@@ -33,7 +33,7 @@ task.spawn(function()
             pressKey(Enum.KeyCode.X)
             pressKey(Enum.KeyCode.C)
         end
-        wait(0.2)
+        wait(0)
     end
 end)
 
